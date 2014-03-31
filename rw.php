@@ -1,6 +1,6 @@
-
 <?php
 error_reporting(0);
+date_default_timezone_set("Europe/Stockholm");
 set_time_limit(0);
 $server = "irc.freenode.org";
 $channels = "#goeosbottest";
@@ -11,11 +11,16 @@ $connection = fsockopen("$server", $port);
 fputs ($connection, "USER $nick $nick $nick $nick :$nick\n");//lulz
 fputs ($connection, "NICK $nick\n");
 fputs ($connection, "JOIN {$channels}\n");
+$handle = fopen ("php://stdin","r");
+stream_set_blocking($handle,0);
+stream_set_blocking($connection,0);
+//echo "->  ";
 while(1)
 {
-while($data = fgets($connection)){
-		flush();
-        
+$data = fgets($connection);
+if($data)
+{
+
         $a1 = explode(' ', $data);
 		$a2 = explode(':', $a1[3]);
 		$a3 = explode('@', $a1[0]);
@@ -29,17 +34,32 @@ $args = NULL; for ($i = 4; $i < count($a1); $i++) {$args .= $a1[$i] . ' ';}
 		if($a1[0] == "PING"){
 			fputs($connection, "PONG ".$a1[1]."\n");
 		}       
-if($inchannel == $channels)
-{
 $a13 = substr($a1[3],1);
-$log = date("m-d-Y H:i:s \G\M\T P ") . $user . ": " . $a13 . " " . $all;
-echo $log . "->  ";
-$handle = fopen ("php://stdin","r");
+$log = date("H:i:s ") . $user . ": " . $a13 . " " . $all;
+echo $log;
+}
 $line = fgets($handle);
+if($line)
+{
+if($line[0] == "/")
+{
+$cmd = explode("/",$line);
+unset($cmd[0]);
+$cmd = implode("/",$cmd);
+$cmd = str_replace("\n","",$cmd);
+fputs($connection, "{$cmd}\n");
+if($cmd == "quit")
+{
+die();
+}
+}
+else
+{
 fputs($connection, "PRIVMSG {$channels} :{$line}");
-fclose($handle);
+}
+//echo "->  ";
+}
+usleep(50000);
 }
 
-}
-}
 ?>

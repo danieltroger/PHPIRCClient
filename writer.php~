@@ -20,7 +20,6 @@ if($line)
 fputs($connection, "PRIVMSG {$channels} :{$line}");
 echo "->  ";
 }
-echo "Blaaahhh \n";
 usleep(500000);
 }
 
