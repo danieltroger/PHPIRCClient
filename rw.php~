@@ -1,27 +1,27 @@
 <?php
-error_reporting(0); //disable dirty error messages in the chatt
-date_default_timezone_set("Europe/Stockholm"); //set europe timezone
-set_time_limit(0);//ehhh idk y
-$server = "irc.freenode.org"; // nah the server to connect to
-$channels = "#goeosbottest"; // it should be channel, atm only one channel is supported
-$port = 6667; // default irc port
-$nick = "dan|el"; //nah the nick
-$connection = fsockopen("$server", $port); //open a socket
+error_reporting(0); //*disable dirty error messages in the chatt
+date_default_timezone_set("Europe/Stockholm"); //*set europe timezone
+set_time_limit(0);//*ehhh idk y
+$server = "irc.freenode.org"; //* nah the server to connect to
+$channels = "#goeosbottest"; //* it should be channel, atm only one channel is supported
+$port = 6667; //* default irc port
+$nick = "dan|el"; //*nah the nick
+$connection = fsockopen("$server", $port); //*open a socket
 
-fputs ($connection, "USER $nick $nick $nick $nick :$nick\n");//connect as a user
-fputs ($connection, "NICK $nick\n"); //set a nick
-fputs ($connection, "JOIN {$channels}\n"); // and join the channel
-$handle = fopen ("php://stdin","r"); // open stdin as resource
-stream_set_blocking($handle,0); // turn streamblocking off, that we can check both resources in one loop
-stream_set_blocking($connection,0); //for both resources
+fputs ($connection, "USER $nick $nick $nick $nick :$nick\n");//*connect as a user
+fputs ($connection, "NICK $nick\n"); //*set a nick
+fputs ($connection, "JOIN {$channels}\n"); //* and join the channel
+$handle = fopen ("php://*stdin","r"); //* open stdin as resource
+stream_set_blocking($handle,0); //* turn streamblocking off, that we can check both resources in one loop
+stream_set_blocking($connection,0); //*for both resources
 //echo "->  ";
-while(1) //the while loop that runs eaech 50ms
+while(1) //*the while loop that runs eaech 50ms
 {
-$data = fgets($connection); // 
-if($data)
+$data = fgets($connection); //*get and
+if($data) //* look for new data in the connection
 {
 
-        $a1 = explode(' ', $data);
+        $a1 = explode(' ', $data); //*some variables
 		$a2 = explode(':', $a1[3]);
 		$a3 = explode('@', $a1[0]);
 		$a4 = explode('!', $a3[0]);
@@ -35,31 +35,31 @@ $args = NULL; for ($i = 4; $i < count($a1); $i++) {$args .= $a1[$i] . ' ';}
 			fputs($connection, "PONG ".$a1[1]."\n");
 		}       
 $a13 = substr($a1[3],1);
-$log = date("H:i:s ") . $user . ": " . $a13 . " " . $all;
-echo $log;
+$log = date("H:i:s ") . $user . ": " . $a13 . " " . $all; //*define the output
+echo $log; //*and output it
 }
-$line = fgets($handle);
-if($line)
+$line = fgets($handle); //* get and 
+if($line) //* look for new data at stdin
 {
-if($line[0] == "/")
+if($line[0] == "/") //* check if the data is an irc command
 {
-$cmd = explode("/",$line);
-unset($cmd[0]);
-$cmd = implode("/",$cmd);
-$cmd = str_replace("\n","",$cmd);
-fputs($connection, "{$cmd}\n");
-if($cmd == "quit")
+$cmd = explode("/",$line); //*if so, explode it by slashes
+unset($cmd[0]); //* and remove the first one ('cause we can't unset character offsets=
+$cmd = implode("/",$cmd); //* implode it again
+$cmd = str_replace("\n","",$cmd); //* remove all \n that we can use the commands later
+fputs($connection, "{$cmd}\n"); //* send it to the irc server
+if($cmd == "quit") //* if the command is quit
 {
-die();
+die(); //* exit the script
 }
 }
-else
+else //* if it's not a command
 {
-fputs($connection, "PRIVMSG {$channels} :{$line}");
+fputs($connection, "PRIVMSG {$channels} :{$line}"); //*just put in to the channel
 }
 //echo "->  ";
 }
-usleep(50000);
+usleep(50000); //* and wait 50ms for the next loop
 }
 
 ?>
