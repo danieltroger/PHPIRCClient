@@ -61,7 +61,7 @@ if($cmd == "me") //* if the command is /me
 $wtp = "PRIVMSG {$channels} :\001ACTION {$cargs}\001\n"; //*define an \001ACTION (a /me)
 fputs($connection, $wtp); //*and send it to the server
 }
-elseif($cmd == "color")
+elseif($cmd == "sayinred")
 {
 fputs($connection, "PRIVMSG {$channels} :\003 04 {$cargs} \003\n");
 }
