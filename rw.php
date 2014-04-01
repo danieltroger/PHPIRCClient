@@ -43,10 +43,15 @@ if($line) //* look for new data at stdin
 {
 if($line[0] == "/") //* check if the data is an irc command
 {
-$cmd = explode("/",$line); //*if so, explode it by slashes
+$conts = explode(" ",$line);
+$cmd = explode("/",$conts[0]); //*if so, explode it by slashes
 unset($cmd[0]); //* and remove the first one ('cause we can't unset character offsets=
 $cmd = implode("/",$cmd); //* implode it again
 $cmd = str_replace("\n","",$cmd); //* remove all \n that we can use the commands later
+if($cmd == "me") //* if the command is /me
+{
+print_r($conts);
+}
 fputs($connection, "{$cmd}\n"); //* send it to the irc server
 if($cmd == "quit") //* if the command is quit
 {
