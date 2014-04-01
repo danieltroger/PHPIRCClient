@@ -61,9 +61,28 @@ if($cmd == "me") //* if the command is /me
 $wtp = "PRIVMSG {$channels} :\001ACTION {$cargs}\001\n"; //*define an \001ACTION (a /me)
 fputs($connection, $wtp); //*and send it to the server
 }
-elseif($cmd == "sayinred")
+elseif($cmd == "colormsg") //*if the command is colormsg
 {
-fputs($connection, "PRIVMSG {$channels} :\003 04 {$cargs} \003\n");
+$arguments = explode(" ",$cargs); //* explode the arguments by " "
+$color = $arguments[0]; //* to get out the color
+unset($arguments[0]); //*then unset the color
+$arguments = implode(" ",$arguments); //* to implode the arguments that we have the text to say
+if($color == "red") //*if the color is red
+{
+fputs($connection, "PRIVMSG {$channels} :\x034{$arguments}\x03\n"); //* say the text in red
+}
+elseif($color == "green") //* if it's green
+{
+fputs($connection, "PRIVMSG {$channels} :\x033{$arguments}\x03\n"); //* say it in green
+}
+elseif($color == "blue") //* the same with blue
+{
+fputs($connection, "PRIVMSG {$channels} :\x032{$arguments}\x03\n");
+}
+else //*if the color doesn't match any condition
+{
+echo "ERROR: Color not found!!!\n"; //*return an error to the console and don't send anything!
+}
 }
 else // if the command is not /me or others
 {
