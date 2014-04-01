@@ -51,7 +51,7 @@ $cmd = implode("/",$cmd); //* implode it by slashes again
 $cargs = NULL; for ($i = 1; $i < count($conts); $i++) {$cargs .= $conts[$i] . ' ';} //* set cargs to the arguments
 if($cmd == "me") //* if the command is /me
 {
-$wtp = "PRIVMSG {$channels} :{$nick}:\001ACTION {$cargs}\001\n";
+$wtp = "PRIVMSG {$channels} :\001ACTION {$cargs}\001\n";
 fputs($connection, $wtp);
 echo $wtp;
 }

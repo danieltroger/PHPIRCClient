@@ -57,7 +57,7 @@ echo $wtp;
 }
 else
 {
-fputs($connection, "{$cmd}\n"); //* send it to the irc server
+fputs($connection, "{$cmd} {$cargs}\n"); //* send it to the irc server
 if($cmd == "quit") //* if the command is quit
 {
 die(); //* exit the script
