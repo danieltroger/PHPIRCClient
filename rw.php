@@ -34,7 +34,14 @@ $args = NULL; for ($i = 4; $i < count($a1); $i++) {$args .= $a1[$i] . ' ';}
 		if($a1[0] == "PING"){
 			fputs($connection, "PONG ".$a1[1]."\n");
 		}       
+if($a1[3][0] == ":")
+{
 $a13 = substr($a1[3],1);
+}
+else
+{
+$a13 = $a1[3];
+}
 $log = date("H:i:s ") . $user . ": " . $a13 . " " . $all; //*define the output
 echo $log; //*and output it
 }
