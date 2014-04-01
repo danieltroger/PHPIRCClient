@@ -50,21 +50,20 @@ if($line) //* look for new data at stdin
 {
 if($line[0] == "/") //* check if the data is an irc command
 {
-$line = str_replace("\n","",$line); //* remove all \n that we can use the commands later
-$conts = explode(" ",$line); //* if so, explode it by " "
+$line = str_replace("\n","",$line); //* if it is, remove all \n that we can use the commands later
+$conts = explode(" ",$line); //* then explode it by " "
 $cmd = explode("/",$conts[0]); //* and explode the first "word" by slashes
 unset($cmd[0]); //* and remove the first one ('cause we can't unset character offsets)
 $cmd = implode("/",$cmd); //* implode it by slashes again
-$cargs = NULL; for ($i = 1; $i < count($conts); $i++) {$cargs .= $conts[$i] . ' ';} //* set cargs to the arguments
+$cargs = NULL; for ($i = 1; $i < count($conts); $i++) {$cargs .= $conts[$i] . ' ';} //* set $cargs to the arguments
 if($cmd == "me") //* if the command is /me
 {
-$wtp = "PRIVMSG {$channels} :\001ACTION {$cargs}\001\n";
-fputs($connection, $wtp);
-echo $wtp;
+$wtp = "PRIVMSG {$channels} :\001ACTION {$cargs}\001\n"; //*define an \001ACTION (a /me)
+fputs($connection, $wtp); //*and send it to the server
 }
-else
+else // if the command is not /me or others
 {
-fputs($connection, "{$cmd} {$cargs}\n"); //* send it to the irc server
+fputs($connection, "{$cmd} {$cargs}\n"); //* send the raw command with arguments top the server
 if($cmd == "quit") //* if the command is quit
 {
 die(); //* exit the script
