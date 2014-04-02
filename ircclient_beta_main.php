@@ -47,17 +47,34 @@ $args = NULL; for ($i = 4; $i < count($a1); $i++) {$args .= $a1[$i] . ' ';}
 	$all = substr($args, 0, -1);
 		if($a1[0] == "PING"){
 			fputs($connection, "PONG ".$a1[1]."\n");
-		}       
-if($a1[3][0] == ":")
+		}      
+if($a1[1] == "PRIVMSG") //* if the remote event was a send message
 {
-$a13 = substr($a1[3],1);
+if($a1[3][0] == ":") //*if someone said it in a channel
+{
+$a13 = substr($a1[3],1); //* remove the : at the beginning of the text
+}
+else //*if it was a pm
+{
+$a13 = $a1[3]; //* just set it
+}
+$logr = date("H:i:s ") . $user . " in {$inchannel}: " . $a13 . " " . $all; //*define the output
+}
+elseif($a1[1] == "KICK") //* if the remote event was a kick
+{
+$logr = $user . " kicked {$a1[3]} in {$inchannel} {$args}\n"; //*define $log to a kick message
+}
+elseif($a1[1] == "MODE") //* if it was a mode
+{
+$targs = str_replace("\n","",$args);
+$logr = $user . " set mode " . $a1[3] . " " . $targs . " in " . $inchannel . "\n";
+print_r(get_defined_vars());
 }
 else
 {
-$a13 = $a1[3];
+$logr = NULL;
 }
-$log = date("H:i:s ") . $user . ": " . $a13 . " " . $all; //*define the output
-echo $log; //*and output it
+echo $logr; //*and output it
 }
 $line = fgets($handle); //* get and 
 if($line) //* look for new data at stdin
