@@ -15,6 +15,20 @@ $handle = fopen ("php://stdin","r"); //* open stdin as resource
 stream_set_blocking($handle,0); //* turn streamblocking off, that we can check both resources in one loop
 stream_set_blocking($connection,0); //*for both resources
 //echo "->  ";
+$colors = array(
+"white" => 0,
+"black" => 1,
+"blue" => 2,
+"green" => 3,
+"red" => 4,
+"brown" => 5,
+"purple" => 6,
+"orange" => 7,
+"yellow" => 8,
+"lightgreen" => 9,
+"silver" => 15,
+"grey" => 14,
+"pink" => 13); // array of color codes
 while(1) //*the while loop that runs eaech 50ms
 {
 $data = fgets($connection); //*get and
@@ -67,19 +81,11 @@ $arguments = explode(" ",$cargs); //* explode the arguments by " "
 $color = $arguments[0]; //* to get out the color
 unset($arguments[0]); //*then unset the color
 $arguments = implode(" ",$arguments); //* to implode the arguments that we have the text to say
-if($color == "red") //*if the color is red
+if(isset($colors[$color])) // if the color exists in the colors array
 {
-fputs($connection, "PRIVMSG {$channels} :\x034{$arguments}\x03\n"); //* say the text in red
+fputs($connection, "PRIVMSG {$channels} :\x03{$colors[$color]}{$arguments}\x03\n"); //say it in the channel
 }
-elseif($color == "green") //* if it's green
-{
-fputs($connection, "PRIVMSG {$channels} :\x033{$arguments}\x03\n"); //* say it in green
-}
-elseif($color == "blue") //* the same with blue
-{
-fputs($connection, "PRIVMSG {$channels} :\x032{$arguments}\x03\n");
-}
-else //*if the color doesn't match any condition
+else //*if the color isn't in the array
 {
 echo "ERROR: Color not found!!!\n"; //*return an error to the console and don't send anything!
 }
