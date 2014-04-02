@@ -28,7 +28,7 @@ $colors = array(
 "lightgreen" => 9,
 "silver" => 15,
 "grey" => 14,
-"pink" => 13); // array of color codes
+"pink" => 13); //* array of color codes
 while(1) //*the while loop that runs eaech 50ms
 {
 $data = fgets($connection); //*get and
@@ -81,16 +81,16 @@ $arguments = explode(" ",$cargs); //* explode the arguments by " "
 $color = $arguments[0]; //* to get out the color
 unset($arguments[0]); //*then unset the color
 $arguments = implode(" ",$arguments); //* to implode the arguments that we have the text to say
-if(isset($colors[$color])) // if the color exists in the colors array
+if(isset($colors[$color])) //* if the color exists in the colors array
 {
-fputs($connection, "PRIVMSG {$channels} :\x03{$colors[$color]}{$arguments}\x03\n"); //say it in the channel
+fputs($connection, "PRIVMSG {$channels} :\x03{$colors[$color]}{$arguments}\x03\n"); //*say it in the channel
 }
 else //*if the color isn't in the array
 {
 echo "ERROR: Color not found!!!\n"; //*return an error to the console and don't send anything!
 }
 }
-else // if the command is not /me or others
+else //* if the command is not /me or others
 {
 fputs($connection, "{$cmd} {$cargs}\n"); //* send the raw command with arguments top the server
 if($cmd == "quit") //* if the command is quit
