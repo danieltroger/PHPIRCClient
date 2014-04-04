@@ -111,6 +111,10 @@ if($cmd == "me") //* if the command is /me
 $wtp = "PRIVMSG {$channels} :\001ACTION {$cargs}\001\n"; //*define an \001ACTION (a /me)
 snd($connection, $wtp); //*and send it to the server
 }
+if($cmd == "identify") //* if the command is /identify
+{
+snd($connection, "PRIVMSG NickServ :identify {$cargs}\n"); //*send a pm to NickServ with identify <password>
+}
 elseif($cmd == "colormsg") //*if the command is colormsg
 {
 $arguments = explode(" ",$cargs); //* explode the arguments by " "
