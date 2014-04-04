@@ -90,7 +90,10 @@ else //*if it was an unknown irc command
 {
 $logr = $data . "\n"; //* just set logr to the raw data
 }
+$lpath = "/logs/{$inchannel}" . date("-m-d-Y")  .".txt"; //* define the path for the logs to be stored in
+$lpath = str_replace("\r","",$lpath); //*remove the annoying \r agian
 echo $logr; //*and output it
+file_put_contents($lpath,file_get_contents($lpath)  . $logr); //* and append the log to the logfile
 }
 $line = fgets($handle); //* get and 
 if($line) //* look for new data at stdin
@@ -106,7 +109,7 @@ $cargs = NULL; for ($i = 1; $i < count($conts); $i++) {$cargs .= $conts[$i] . ' 
 if($cmd == "me") //* if the command is /me
 {
 $wtp = "PRIVMSG {$channels} :\001ACTION {$cargs}\001\n"; //*define an \001ACTION (a /me)
-fputs($connection, $wtp); //*and send it to the server
+snd($connection, $wtp); //*and send it to the server
 }
 elseif($cmd == "colormsg") //*if the command is colormsg
 {
@@ -116,7 +119,7 @@ unset($arguments[0]); //*then unset the color
 $arguments = implode(" ",$arguments); //* to implode the arguments that we have the text to say
 if(isset($colors[$color])) //* if the color exists in the colors array
 {
-fputs($connection, "PRIVMSG {$channels} :\x03{$colors[$color]}{$arguments}\x03\n"); //*say it in the channel
+snd($connection, "PRIVMSG {$channels} :\x03{$colors[$color]}{$arguments}\x03\n"); //*say it in the channel
 }
 else //*if the color isn't in the array
 {
@@ -125,7 +128,7 @@ echo "ERROR: Color not found!!!\n"; //*return an error to the console and don't 
 }
 else //* if the command is not /me or others
 {
-fputs($connection, "{$cmd} {$cargs}\n"); //* send the raw command with arguments top the server
+snd($connection, "{$cmd} {$cargs}\n"); //* send the raw command with arguments top the server
 if($cmd == "quit") //* if the command is quit
 {
 die(); //* exit the script
@@ -134,11 +137,16 @@ die(); //* exit the script
 }
 else //* if it's not a command
 {
-fputs($connection, "PRIVMSG {$channels} :{$line}"); //*just put in to the channel
+snd($connection, "PRIVMSG {$channels} :{$line}"); //*just put in to the channel
 }
 //echo "->  ";
 }
 usleep(50000); //* and wait 50ms for the next loop
 }
-
+function snd($conn,$data)
+{
+fputs($conn,$data);
+$spath = "/logs/sent" .  date("-m-d-Y") . ".txt";
+file_put_contents($spath,file_get_contents($spath)  . date(" H:i:s ") . "{$data}");
+}
 ?>
