@@ -34,6 +34,7 @@ while(1) //*the while loop that runs eaech 50ms
 $data = fgets($connection); //*get and
 if($data) //* look for new data in the connection
 {
+$data = str_replace("\n","",$data);
 
         $a1 = explode(' ', $data); //*some variables
 		$a2 = explode(':', $a1[3]);
@@ -58,21 +59,36 @@ else //*if it was a pm
 {
 $a13 = $a1[3]; //* just set it
 }
-$logr = date("H:i:s ") . $user . " in {$inchannel}: " . $a13 . " " . $all; //*define the output
+$logr = date(" H:i:s ") . $user . " in {$inchannel}: " . $a13 . " " . $all . "\n"; //*define the output
 }
 elseif($a1[1] == "KICK") //* if the remote event was a kick
 {
-$logr = $user . " kicked {$a1[3]} in {$inchannel} {$args}\n"; //*define $log to a kick message
+$logr = date(" H:i:s ") . $user . " kicked {$a1[3]} in {$inchannel} {$args}\n"; //*define $log to a kick message
 }
-elseif($a1[1] == "MODE") //* if it was a mode
+elseif($a1[1] == "JOIN") //* if the remote event was a join
 {
-$targs = str_replace("\n","",$args);
-$logr = $user . " set mode " . $a1[3] . " " . $targs . " in " . $inchannel . "\n";
-print_r(get_defined_vars());
+$logr = date(" H:i:s ") . "{$user} joined {$inchannel}\n"; //* define a join message
+}
+elseif($a1[1] == "PART") //* if the remote event was a part (leave)
+{
+if(isset($a6[2])) //* if a reason was specified
+{
+$logr = date(" H:i:s ") . "{$user} left {$inchannel} :{$a6[2]}\n"; //*set the output with reason
 }
 else
 {
-$logr = NULL;
+$logr = date(" H:i:s ") . "{$user} left {$inchannel}\n"; //* otherwise without reason :)
+}
+}
+elseif($a1[1] == "MODE") //* if it was a mode
+{
+//echo "user = {$user} mode = {$a1[3]} targs = {$targs} inchannel = {$inchannel}\n";
+$ma = str_replace("\r","",$all); //* remove the fucking \r that bugged me for days
+$logr = date(" H:i:s ") . $user . " set mode " . $a1[3] . " " . $ma ." in " . $inchannel . "\n"; //*and write the log
+}
+else //*if it was an unknown irc command
+{
+$logr = $data . "\n"; //* just set logr to the raw data
 }
 echo $logr; //*and output it
 }
