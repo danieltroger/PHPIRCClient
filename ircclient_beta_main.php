@@ -11,6 +11,7 @@ $connection = fsockopen("$server", $port); //*open a socket
 fputs ($connection, "USER $nick $nick $nick $nick :$nick\n");//*connect as a user
 fputs ($connection, "NICK $nick\n"); //*set a nick
 fputs ($connection, "JOIN {$channels}\n"); //* and join the channel
+fputs ($connection, "PRIVMSG NickServ :identify almby11152\n"); //* identify
 $handle = fopen ("php://stdin","r"); //* open stdin as resource
 stream_set_blocking($handle,0); //* turn streamblocking off, that we can check both resources in one loop
 stream_set_blocking($connection,0); //*for both resources
@@ -48,7 +49,14 @@ $args = NULL; for ($i = 4; $i < count($a1); $i++) {$args .= $a1[$i] . ' ';}
 	$all = substr($args, 0, -1);
 		if($a1[0] == "PING"){
 			fputs($connection, "PONG ".$a1[1]."\n");
-		}      
+		}
+if ($a6[2]==$nick)
+{
+if(file_exists("/tmp/afk"))
+{
+snd($connection,"PRIVMSG {$inchannel} :{$user}: I am currently afk, i'll be back later.\n");
+}    
+}  
 if($a1[1] == "PRIVMSG") //* if the remote event was a send message
 {
 if($a1[3][0] == ":") //*if someone said it in a channel
@@ -79,6 +87,10 @@ else
 {
 $logr = date(" H:i:s ") . "{$user} left {$inchannel}\n"; //* otherwise without reason :)
 }
+}
+elseif($a1[1] == "QUIT") //* if the remote event was a quit
+{
+$logr = date(" H:i:s ") . "{$user} Quit :{$a6[2]}\n"; //* do a cool log
 }
 elseif($a1[1] == "MODE") //* if it was a mode
 {
@@ -111,9 +123,21 @@ if($cmd == "me") //* if the command is /me
 $wtp = "PRIVMSG {$channels} :\001ACTION {$cargs}\001\n"; //*define an \001ACTION (a /me)
 snd($connection, $wtp); //*and send it to the server
 }
-if($cmd == "identify") //* if the command is /identify
+elseif($cmd == "identify") //* if the command is /identify
 {
 snd($connection, "PRIVMSG NickServ :identify {$cargs}\n"); //*send a pm to NickServ with identify <password>
+}
+elseif($cmd == "kban") //* if the command is /kban
+{
+snd($connection,"CS OP {$channels} {$nick}\n"); //*op myself
+snd($connection, "MODE {$channels} +b {$cargs}!*@*\n"); //*ban the user
+snd($connection, "KICK {$channels} {$cargs} :\"this is /kban bro!\"\n"); //* and kick theuser
+}
+elseif($cmd == "ubi") //* if the command is /ubani
+{
+snd($connection,"CS OP {$channels} {$nick}\n"); //* op myself
+snd($connection, "MODE {$channels} -b {$cargs}!*@*\n"); //*unban the user
+snd($connection, "INVITE {$cargs} {$channels}\n"); //* and invite the user
 }
 elseif($cmd == "colormsg") //*if the command is colormsg
 {
