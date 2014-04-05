@@ -1,4 +1,4 @@
-THis is my project, PHPIRCClient, a ircclient for the cli written entirely in php.
+This is my project, PHPIRCClient, a ircclient for the cli written entirely in php.
 FEAUTRES:
 * /kban | (kick and ban) cli command with auto opping over cs
 * auto identifying
@@ -11,6 +11,9 @@ FEAUTRES:
 * unreadable code
 * /ubi | cli command (unban and invite) with auto opping over cs
 * /quit | cli command to exit
+* /haha | cli command that outputs a joke
+* auto answering to thank you
+* joke when someone says hello in the channel
 TODO: 
 Multiple channel support
 and much more
