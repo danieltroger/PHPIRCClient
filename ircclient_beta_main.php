@@ -1,4 +1,5 @@
 <?php
+include "/var/www/jokes.php";
 error_reporting(0); //*disable dirty error messages in the chatt
 date_default_timezone_set("Europe/Stockholm"); //*set europe timezone
 set_time_limit(0);//*ehhh idk y
@@ -50,6 +51,14 @@ $args = NULL; for ($i = 4; $i < count($a1); $i++) {$args .= $a1[$i] . ' ';}
 		if($a1[0] == "PING"){
 			fputs($connection, "PONG ".$a1[1]."\n");
 		}
+if(strpos(substr(strtolower($a1[3]),1),"hello") !== false)
+{
+$num = rand(0,count($jokes)-1);
+snd($connection, "PRIVMSG {$inchannel} : \"" . $jokes[$num] . "\"\n");
+}
+if(strpos($data, 'dan|el')!== false && ((strpos($data, 'thx')!== false) || (strpos($data, 'thank')!== false)|| (strpos($data, 'thanx')!== false))){
+snd($connection, "PRIVMSG {$inchannel} :{$user}: No problem!\n");
+}
 if ($a6[2]==$nick)
 {
 if(file_exists("/tmp/afk"))
