@@ -53,8 +53,8 @@ $args = NULL; for ($i = 4; $i < count($a1); $i++) {$args .= $a1[$i] . ' ';}
 		}
 if(strpos(substr(strtolower($a1[3]),1),"hello") !== false)
 {
-$num = rand(0,count($jokes)-1);
-snd($connection, "PRIVMSG {$inchannel} : \"" . $jokes[$num] . "\"\n");
+$j = joke($jokes);
+snd($connection, "PRIVMSG {$inchannel} : \"{$j}\"\n");
 }
 if(strpos($data, 'dan|el')!== false && ((strpos($data, 'thx')!== false) || (strpos($data, 'thank')!== false)|| (strpos($data, 'thanx')!== false))){
 snd($connection, "PRIVMSG {$inchannel} :{$user}: No problem!\n");
@@ -136,6 +136,10 @@ elseif($cmd == "identify") //* if the command is /identify
 {
 snd($connection, "PRIVMSG NickServ :identify {$cargs}\n"); //*send a pm to NickServ with identify <password>
 }
+elseif($cmd == "haha") //* if the command is /haha
+{
+echo "\"" . joke($jokes) . "\"\n";
+}
 elseif($cmd == "kban") //* if the command is /kban
 {
 snd($connection,"CS OP {$channels} {$nick}\n"); //*op myself
@@ -185,5 +189,10 @@ function snd($conn,$data)
 fputs($conn,$data);
 $spath = "/logs/sent" .  date("-m-d-Y") . ".txt";
 file_put_contents($spath,file_get_contents($spath)  . date(" H:i:s ") . "{$data}");
+}
+function joke($jokes)
+{
+$num = rand(0,count($jokes)-1);
+return $jokes[$num];
 }
 ?>
