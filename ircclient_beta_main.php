@@ -1,5 +1,5 @@
 <?php
-include "/var/www/jokes.php";
+include "jokes.php";
 error_reporting(0); //*disable dirty error messages in the chatt
 date_default_timezone_set("Europe/Stockholm"); //*set europe timezone
 set_time_limit(0);//*ehhh idk y
