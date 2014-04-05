@@ -1,0 +1,16 @@
+THis is my project, PHPIRCClient, a ircclient for the cli written entirely in php.
+FEAUTRES:
+* /kban | (kick and ban) cli command with auto opping over cs
+* auto identifying
+* /identify | cli command to identify with NickServ
+* Cool logging to cli and to /logs
+* /me | cli command
+* /colormsg <color> <text> | cli command to color the text
+* auto afk message if /tmp/afk exists
+* good commented code :)
+* unreadable code
+* /ubi | cli command (unban and invite) with auto opping over cs
+* /quit | cli command to exit
+TODO: 
+Multiple channel support
+and much more

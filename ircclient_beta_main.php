@@ -11,7 +11,7 @@ $connection = fsockopen("$server", $port); //*open a socket
 fputs ($connection, "USER $nick $nick $nick $nick :$nick\n");//*connect as a user
 fputs ($connection, "NICK $nick\n"); //*set a nick
 fputs ($connection, "JOIN {$channels}\n"); //* and join the channel
-fputs ($connection, "PRIVMSG NickServ :identify *****\n"); //* identify
+fputs ($connection, "PRIVMSG NickServ :identify **********\n"); //* identify
 $handle = fopen ("php://stdin","r"); //* open stdin as resource
 stream_set_blocking($handle,0); //* turn streamblocking off, that we can check both resources in one loop
 stream_set_blocking($connection,0); //*for both resources
