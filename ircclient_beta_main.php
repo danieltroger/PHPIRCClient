@@ -4,15 +4,19 @@ error_reporting(0); //*disable dirty error messages in the chatt
 date_default_timezone_set("Europe/Stockholm"); //*set europe timezone
 set_time_limit(0);//*ehhh idk y
 $server = "irc.freenode.org"; //* nah the server to connect to
-$channels = "#goeosbottest"; //* it should be channel, atm only one channel is supported
+$channels = array("#goeosbottest","#dchat"); //* array of channels
+$channel = $channels[0]; //*default channel
 $port = 6667; //* default irc port
 $nick = "dan|el"; //*nah the nick
 $connection = fsockopen("$server", $port); //*open a socket
 
 fputs ($connection, "USER $nick $nick $nick $nick :$nick\n");//*connect as a user
 fputs ($connection, "NICK $nick\n"); //*set a nick
-fputs ($connection, "JOIN {$channels}\n"); //* and join the channel
-fputs ($connection, "PRIVMSG NickServ :identify **********\n"); //* identify
+foreach($channels as $chann) //*join each channel of all channels
+{
+snd($connection, "JOIN {$chann}\n");
+}
+fputs ($connection, "PRIVMSG NickServ :identify almby11152\n"); //* identify
 $handle = fopen ("php://stdin","r"); //* open stdin as resource
 stream_set_blocking($handle,0); //* turn streamblocking off, that we can check both resources in one loop
 stream_set_blocking($connection,0); //*for both resources
@@ -51,7 +55,7 @@ $args = NULL; for ($i = 4; $i < count($a1); $i++) {$args .= $a1[$i] . ' ';}
 		if($a1[0] == "PING"){
 			fputs($connection, "PONG ".$a1[1]."\n");
 		}
-if(strpos(substr(strtolower($a1[3]),1),"hello") !== false)
+if(strpos(substr(strtolower($a1[3]),1),"hello") !== false && $inchannel != "#jailbreakqa")
 {
 $j = joke($jokes);
 snd($connection, "PRIVMSG {$inchannel} : \"{$j}\"\n");
@@ -94,7 +98,10 @@ $logr = date(" H:i:s ") . "{$user} left {$inchannel} :{$a6[2]}\n"; //*set the ou
 }
 else
 {
+if($a1[0] != "PING") //* if it not only was a heartbeat
+{
 $logr = date(" H:i:s ") . "{$user} left {$inchannel}\n"; //* otherwise without reason :)
+}
 }
 }
 elseif($a1[1] == "QUIT") //* if the remote event was a quit
@@ -129,7 +136,7 @@ $cmd = implode("/",$cmd); //* implode it by slashes again
 $cargs = NULL; for ($i = 1; $i < count($conts); $i++) {$cargs .= $conts[$i] . ' ';} //* set $cargs to the arguments
 if($cmd == "me") //* if the command is /me
 {
-$wtp = "PRIVMSG {$channels} :\001ACTION {$cargs}\001\n"; //*define an \001ACTION (a /me)
+$wtp = "PRIVMSG {$channel} :\001ACTION {$cargs}\001\n"; //*define an \001ACTION (a /me)
 snd($connection, $wtp); //*and send it to the server
 }
 elseif($cmd == "identify") //* if the command is /identify
@@ -140,17 +147,55 @@ elseif($cmd == "haha") //* if the command is /haha
 {
 echo "\"" . joke($jokes) . "\"\n";
 }
+elseif($cmd == "cc") //* if the command is /cc (channel controler)
+{
+$action = $conts[1]; //* define $action to the flag (-someting)
+$chan = $conts[2]; //* set $chan to the second argument
+if($action == "-j") //* if the action was -j
+{
+snd($connection,"JOIN {$chan}\n"); //*join the channel
+echo "Joined {$chan}\n"; //*and output a message to the cli
+}
+elseif($action == "-l") //*if it was -l
+{
+snd($connection,"PART {$chan}\n"); //* leave the channel without reason
+echo "Left {$chan}\n"; //* and log to cli
+}
+elseif($action == "-s") //*if it was -s
+{
+$channel = $chan; //* define the var to the chan argument
+echo "Switched to {$chan}\n"; //* and log to the cli
+}
+elseif($action == "-n") //* if it was -n
+{
+snd($connection,"NICK {$chan}\n"); //* change the nick
+echo "Changed nick to {$chan}\n"; //* and log to cli
+}
+else //* else
+{
+echo "Usage:\n"; //* output a usage information to the cli
+echo "/cc [-n nickname] [-s channel] [-l channel] [-j channel]\n";
+echo "-n changes the nick\n";
+echo "-s switches channel\n";
+echo "-j joins channel\n";
+echo "-l leaves channel\n";
+}
+}
+elseif($cmd == "exec") //* if the command is /exec
+{
+echo shell_exec($cargs);
+}
 elseif($cmd == "kban") //* if the command is /kban
 {
-snd($connection,"CS OP {$channels} {$nick}\n"); //*op myself
-snd($connection, "MODE {$channels} +b {$cargs}!*@*\n"); //*ban the user
-snd($connection, "KICK {$channels} {$cargs} :\"this is /kban bro!\"\n"); //* and kick theuser
+snd($connection,"CS OP {$channel} {$nick}\n"); //*op myself
+snd($connection, "MODE {$channel} +b {$cargs}!*@*\n"); //*ban the user
+snd($connection, "KICK {$channel} {$cargs} :\"this is /kban bro!\"\n"); //* and kick theuser
 }
 elseif($cmd == "ubi") //* if the command is /ubani
 {
-snd($connection,"CS OP {$channels} {$nick}\n"); //* op myself
-snd($connection, "MODE {$channels} -b {$cargs}!*@*\n"); //*unban the user
-snd($connection, "INVITE {$cargs} {$channels}\n"); //* and invite the user
+snd($connection,"CS OP {$channel} {$nick}\n"); //* op myself
+snd($connection, "MODE {$channel} -b {$cargs}!*@*\n"); //*unban the user
+snd($connection, "INVITE {$cargs} {$channel}\n"); //* and invite the user
 }
 elseif($cmd == "colormsg") //*if the command is colormsg
 {
@@ -160,7 +205,7 @@ unset($arguments[0]); //*then unset the color
 $arguments = implode(" ",$arguments); //* to implode the arguments that we have the text to say
 if(isset($colors[$color])) //* if the color exists in the colors array
 {
-snd($connection, "PRIVMSG {$channels} :\x03{$colors[$color]}{$arguments}\x03\n"); //*say it in the channel
+snd($connection, "PRIVMSG {$channel} :\x03{$colors[$color]}{$arguments}\x03\n"); //*say it in the channel
 }
 else //*if the color isn't in the array
 {
@@ -178,7 +223,7 @@ die(); //* exit the script
 }
 else //* if it's not a command
 {
-snd($connection, "PRIVMSG {$channels} :{$line}"); //*just put in to the channel
+snd($connection, "PRIVMSG {$channel} :{$line}"); //*just put in to the channel
 }
 //echo "->  ";
 }

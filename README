@@ -14,6 +14,6 @@ FEAUTRES:
 * /haha | cli command that outputs a joke
 * auto answering to thank you
 * joke when someone says hello in the channel
+* /cc | cli chanel manager command, do /cc help for usage
 TODO: 
-Multiple channel support
-and much more
+Much more
