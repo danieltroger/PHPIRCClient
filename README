@@ -15,5 +15,6 @@ FEAUTRES:
 * auto answering to thank you
 * joke when someone says hello in the channel
 * /cc | cli chanel manager command, do /cc help for usage
+* multiple chans, se /cc
 TODO: 
 Much more
