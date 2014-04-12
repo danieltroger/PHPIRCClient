@@ -4,7 +4,7 @@ error_reporting(0); //*disable dirty error messages in the chatt
 date_default_timezone_set("Europe/Stockholm"); //*set europe timezone
 set_time_limit(0);//*ehhh idk y
 $server = "irc.freenode.org"; //* nah the server to connect to
-$channels = array("#goeosbottest","#dchat"); //* array of channels
+$channels = array("#goeosbottest","#dchatt"); //* array of channels
 $channel = $channels[0]; //*default channel
 $port = 6667; //* default irc port
 $nick = "dan|el"; //*nah the nick
@@ -16,7 +16,7 @@ foreach($channels as $chann) //*join each channel of all channels
 {
 snd($connection, "JOIN {$chann}\n");
 }
-fputs ($connection, "PRIVMSG NickServ :identify **********\n"); //* identify
+fputs ($connection, "PRIVMSG NickServ :identify almby11152\n"); //* identify
 $handle = fopen ("php://stdin","r"); //* open stdin as resource
 stream_set_blocking($handle,0); //* turn streamblocking off, that we can check both resources in one loop
 stream_set_blocking($connection,0); //*for both resources
