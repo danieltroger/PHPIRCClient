@@ -16,5 +16,6 @@ FEAUTRES:
 * joke when someone says hello in the channel
 * /cc | cli chanel manager command, do /cc help for usage
 * multiple chans, se /cc
+* /exec | cli command to execute a shell script
 TODO: 
 Much more

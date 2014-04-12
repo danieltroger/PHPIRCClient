@@ -16,7 +16,7 @@ foreach($channels as $chann) //*join each channel of all channels
 {
 snd($connection, "JOIN {$chann}\n");
 }
-fputs ($connection, "PRIVMSG NickServ :identify almby11152\n"); //* identify
+fputs ($connection, "PRIVMSG NickServ :identify **********\n"); //* identify
 $handle = fopen ("php://stdin","r"); //* open stdin as resource
 stream_set_blocking($handle,0); //* turn streamblocking off, that we can check both resources in one loop
 stream_set_blocking($connection,0); //*for both resources
@@ -98,10 +98,7 @@ $logr = date(" H:i:s ") . "{$user} left {$inchannel} :{$a6[2]}\n"; //*set the ou
 }
 else
 {
-if($a1[0] != "PING") //* if it not only was a heartbeat
-{
 $logr = date(" H:i:s ") . "{$user} left {$inchannel}\n"; //* otherwise without reason :)
-}
 }
 }
 elseif($a1[1] == "QUIT") //* if the remote event was a quit
@@ -116,7 +113,10 @@ $logr = date(" H:i:s ") . $user . " set mode " . $a1[3] . " " . $ma ." in " . $i
 }
 else //*if it was an unknown irc command
 {
+if($a1[0] != "PING") //* if it not only was a heartbeat
+{
 $logr = $data . "\n"; //* just set logr to the raw data
+}
 }
 $lpath = "/logs/{$inchannel}" . date("-m-d-Y")  .".txt"; //* define the path for the logs to be stored in
 $lpath = str_replace("\r","",$lpath); //*remove the annoying \r agian
