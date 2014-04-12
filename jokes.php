@@ -1,5 +1,5 @@
 <?php
-$jokes = array(,"I'd like to shove my ipod in iH8sn0ws face and say \"you put dat cydia on my ipod you sickk guy\"","found my old iphone 3gs, and accidentally update it to ios 6.1.6","I would go in the dschungel",
+$jokes = array("I'd like to shove my ipod in iH8sn0ws face and say \"you put dat cydia on my ipod you sickk guy\"","found my old iphone 3gs, and accidentally update it to ios 6.1.6","I would go in the dschungel",
 "Rio djanrero is is a bigg city",
 "The island is an Ort, who were anywere but I don't know were",
 "The poeple in tokio speek japasese",
