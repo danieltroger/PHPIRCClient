@@ -166,6 +166,10 @@ elseif($action == "-s") //*if it was -s
 $channel = $chan; //* define the var to the chan argument
 echo "Switched to {$chan}\n"; //* and log to the cli
 }
+elseif($action == "-c") //*if it was -c
+{
+echo "Cureent channel: {$channel}\n"; //* output the current chan
+}
 elseif($action == "-n") //* if it was -n
 {
 snd($connection,"NICK {$chan}\n"); //* change the nick
@@ -174,11 +178,12 @@ echo "Changed nick to {$chan}\n"; //* and log to cli
 else //* else
 {
 echo "Usage:\n"; //* output a usage information to the cli
-echo "/cc [-n nickname] [-s channel] [-l channel] [-j channel]\n";
+echo "/cc [-n nickname] [-s channel] [-l channel] [-j channel] [-c ]\n";
 echo "-n changes the nick\n";
 echo "-s switches channel\n";
 echo "-j joins channel\n";
 echo "-l leaves channel\n";
+echo "-c outputs the current channel\n";
 }
 }
 elseif($cmd == "exec") //* if the command is /exec
