@@ -1,5 +1,10 @@
 <?php
-$jokes = array("I use are only used for legitimate medical bigboos piracy","I'd like to shove my ipod in iH8sn0ws face and say \"you put dat cydia on my ipod you sickk guy\"","found my old iphone 3gs, and accidentally update it to ios 6.1.6","I would go in the dschungel",
+$jokes = array("Now I have iOS 7.1 can I downgrade to 7.0.4 with the use of my SHSH blobs of iOS 6.1.2? Why?",
+"I use are only used for legitimate medical bigboos piracy",
+"I'd like to shove my ipod in iH8sn0ws face and say \"you put dat cydia on my ipod you sickk guy\"",
+"found my old iphone 3gs, and accidentally update it to ios 6.1.6",
+"I would go in the dschungel",
+"hi i have a 3gs new bootrom which i accidentally updated with itunes to 6.1.3, ",
 "Rio djanrero is is a bigg city",
 "The island is an Ort, who were anywere but I don't know were",
 "The poeple in tokio speek japasese",
