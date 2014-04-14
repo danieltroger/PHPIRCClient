@@ -202,6 +202,10 @@ snd($connection,"CS OP {$channel} {$nick}\n"); //* op myself
 snd($connection, "MODE {$channel} -b {$cargs}!*@*\n"); //*unban the user
 snd($connection, "INVITE {$cargs} {$channel}\n"); //* and invite the user
 }
+elseif($cmd == "tweaks") //* if the command is /tweaks
+{
+echo "Tweaklist: http://goo.gl/5oxNkN\n";
+}
 elseif($cmd == "colormsg") //*if the command is colormsg
 {
 $arguments = explode(" ",$cargs); //* explode the arguments by " "
