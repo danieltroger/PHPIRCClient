@@ -212,7 +212,7 @@ elseif($cmd == "kban") //* if the command is /kban
 {
 snd($connection,"CS OP {$channel} {$nick}\n"); //*op myself
 snd($connection, "MODE {$channel} +b {$cargs}!*@*\n"); //*ban the user
-snd($connection, "KICK {$channel} {$cargs} :\"this is /kban bro!\"\n"); //* and kick theuser
+snd($connection, "KICK {$channel} {$cargs} :\"Your behavior is not conducive to the desired environment.\"\n"); //* and kick theuser
 }
 elseif($cmd == "ubi") //* if the command is /ubani
 {
