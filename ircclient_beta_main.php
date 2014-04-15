@@ -4,19 +4,20 @@ error_reporting(0); //*disable dirty error messages in the chatt
 date_default_timezone_set("Europe/Stockholm"); //*set europe timezone
 set_time_limit(0);//*ehhh idk y
 $server = "irc.freenode.org"; //* nah the server to connect to
-$channels = array("#goeosbottest","#dchatt","#jailbreakqa"); //* array of channels
+$channels = array("#goeosbottest","#dchatt","#jailbreakqa","#atxhack"); //* array of channels
 $channel = $channels[0]; //*default channel
 $port = 6667; //* default irc port
-$nick = "dan|el"; //*nah the nick
+$nick = "Guest_" . rand(1,2000); //*nah the nick
 $connection = fsockopen("$server", $port); //*open a socket
 
 fputs ($connection, "USER $nick $nick $nick $nick :$nick\n");//*connect as a user
-fputs ($connection, "NICK $nick\n"); //*set a nick
+fputs ($connection, "NICK dan|el\n"); //*set a nick
 foreach($channels as $chann) //*join each channel of all channels
 {
 snd($connection, "JOIN {$chann}\n");
 }
 fputs ($connection, "PRIVMSG NickServ :identify almby11152\n"); //* identify
+fputs ($connection, "NICK $nick\n"); //*set a nick
 $handle = fopen ("php://stdin","r"); //* open stdin as resource
 stream_set_blocking($handle,0); //* turn streamblocking off, that we can check both resources in one loop
 stream_set_blocking($connection,0); //*for both resources
@@ -64,7 +65,7 @@ if(strpos(substr(strtolower($a1[3]),1),"hello") !== false && $inchannel != "#jai
 $j = joke($jokes);
 snd($connection, "PRIVMSG {$inchannel} : \"{$j}\"\n");
 }
-if(strpos($data, 'dan|el')!== false && ((strpos($data, 'thx')!== false) || (strpos($data, 'thank')!== false)|| (strpos($data, 'thanx')!== false))){
+if(strpos($data, $nick)!== false && ((strpos($data, 'thx')!== false) || (strpos($data, 'thank')!== false)|| (strpos($data, 'thanx')!== false))){
 snd($connection, "PRIVMSG {$inchannel} :{$user}: No problem!\n");
 }
 if ($a6[2]==$nick)
