@@ -1,5 +1,6 @@
 <?php
 include "jokes.php";
+include "translate.php";
 error_reporting(0); //*disable dirty error messages in the chatt
 date_default_timezone_set("Europe/Stockholm"); //*set europe timezone
 set_time_limit(0);//*ehhh idk y
@@ -52,13 +53,25 @@ $data = str_replace("\n","",$data);
         $user = $a5[1];
         $inchannel = $a1[2];
 $args = NULL; for ($i = 4; $i < count($a1); $i++) {$args .= $a1[$i] . ' ';}
-	$all = substr($args, 0, -1);
+	$all = str_replace("\n","",substr($args, 0, -1));
 		if($a1[0] == "PING"){
 			fputs($connection, "PONG ".$a1[1]."\n");
 		}
 if(strpos(substr(strtolower($a1[3]),1),"!7.1") !== false )
 {
 snd($connection,"PRIVMSG {$inchannel} :{$user}: iOS 7.1 tweaklist: http://goo.gl/5oxNkN\n");
+}
+if(strpos(substr(strtolower($a1[3]),1),"!translate") !== false && $inchannel != "#jailbreakqa")
+{
+$tolang =$a1[4];
+$tr = new GoogleTranslate();
+$tr->setLangFrom("auto");
+$tr->setLangTo($tolang);
+$text = explode(" ",$all);
+unset($text[0]);
+$text = str_replace("\n","",str_replace("\r","",implode(" ",$text)));
+$trn = $tr->translate($text);
+snd($connection, "PRIVMSG {$inchannel} :{$user}: \"{$text}\" means \"{$trn}\" in {$tolang}\n");
 }
 if(strpos(substr(strtolower($a1[3]),1),"hello") !== false && $inchannel != "#jailbreakqa")
 {
