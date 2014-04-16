@@ -1,5 +1,6 @@
 <?php
-$jokes = array("Now I have iOS 7.1 can I downgrade to 7.0.4 with the use of my SHSH blobs of iOS 6.1.2? Why?",
+$jokes = array("I accidentally upgraded to 7.1. Really mad. Any help?",
+"Now I have iOS 7.1 can I downgrade to 7.0.4 with the use of my SHSH blobs of iOS 6.1.2? Why?",
 "I use are only used for legitimate medical bigboos piracy",
 "I'd like to shove my ipod in iH8sn0ws face and say \"you put dat cydia on my ipod you sickk guy\"",
 "found my old iphone 3gs, and accidentally update it to ios 6.1.6",
