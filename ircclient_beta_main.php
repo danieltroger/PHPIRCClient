@@ -61,6 +61,10 @@ if(strpos(substr(strtolower($a1[3]),1),"!7.1") !== false )
 {
 snd($connection,"PRIVMSG {$inchannel} :{$user}: iOS 7.1 tweaklist: http://goo.gl/5oxNkN\n");
 }
+if(strpos(substr(strtolower($a1[3]),1),"!stether") !== false )
+{
+snd($connection,"PRIVMSG {$inchannel} :{$user}: Add repo.natur-kultur.eu to your sources in cydia and install 7.1 semitether.\n");
+}
 if(strpos(substr(strtolower($a1[3]),1),"!translate") !== false && $inchannel != "#jailbreakqa")
 {
 $tolang =$a1[4];
