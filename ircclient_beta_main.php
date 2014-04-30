@@ -65,6 +65,10 @@ if(strpos(substr(strtolower($a1[3]),1),"!stether") !== false )
 {
 snd($connection,"PRIVMSG {$inchannel} :{$user}: Add repo.natur-kultur.eu to your sources in cydia and install 7.1 semitether.\n");
 }
+if(strpos(substr(strtolower($a1[3]),1),"!karma") !== false )
+{
+snd($connection,"PRIVMSG {$inchannel} :{$user}: " . file_get_contents("http://files.natur-kultur.eu/karma.php?u=" . str_replace("\n","",str_replace("\r","",substr($a1[4],0,-1)))) . "\n");
+}
 if(strpos(substr(strtolower($a1[3]),1),"!translate") !== false && $inchannel != "#jailbreakqa")
 {
 $tolang =$a1[4];
