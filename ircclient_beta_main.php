@@ -51,7 +51,7 @@ $data = str_replace("\n","",$data);
                 $a5 = explode(':', $a4[0]);
                 $a6 = explode(':', $data);
         $user = $a5[1];
-        $user = colorize($user);
+       // $user = colorize($user);
         $inchannel = $a1[2];
 $args = NULL; for ($i = 4; $i < count($a1); $i++) {$args .= $a1[$i] . ' ';}
         $all = str_replace("\n","",substr($args, 0, -1));
@@ -147,7 +147,7 @@ $logr = "\033[0m " . $data . "\033[0m \n"; //* just set logr to the raw data
 }
 $lpath = "/logs/{$inchannel}" . date("-m-d-Y")  .".txt"; //* define the path for the logs to be stored in
 $lpath = str_replace("\r","",$lpath); //*remove the annoying \r agian
-echo $logr; //*and output it
+echo str_replace($user,colorize($user)) . $logr; //*and output it
 file_put_contents($lpath,file_get_contents($lpath)  . $logr); //* and append the log to the logfile
 }
 $line = fgets($handle); //* get and 
@@ -294,45 +294,45 @@ return $jokes[$num];
 function colorize($we){
 $hash = sha1($we);
 $term = hexdec(substr($hash, 0, 2));
-
+echo " ";
 if(in_array($term, range(0, 18))){
-return "\e[31m{$we}\e[39m";
+echo "\e[31m{$we}\e[39m";
 }
 elseif(in_array($term, range(18, 36))){
-return "\e[32m{$we}\e[39m";
+echo "\e[32m{$we}\e[39m";
 }
 elseif(in_array($term, range(36, 54))){
-return "\e[33m{$we}\e[39m";
+echo "\e[33m{$we}\e[39m";
 }
 elseif(in_array($term, range(54, 72))){
-return "\e[34m{$we}\e[39m";
+echo "\e[34m{$we}\e[39m";
 }
 elseif(in_array($term, range(72, 90))){
-return "\e[35m{$we}\e[39m";
+echo "\e[35m{$we}\e[39m";
 }
 elseif(in_array($term, range(90, 108))){
-return "\e[36m{$we}\e[39m";
+echo "\e[36m{$we}\e[39m";
 }
 elseif(in_array($term, range(108, 126))){
-return "\e[37m{$we}\e[39m";
+echo "\e[37m{$we}\e[39m";
 }
 elseif(in_array($term, range(126, 144))){
-return "\e[91m{$we}\e[39m";
+echo "\e[91m{$we}\e[39m";
 }
 elseif(in_array($term, range(144, 162))){
-return "\e[92m{$we}\e[39m";
+echo "\e[92m{$we}\e[39m";
 }
 elseif(in_array($term, range(162, 180))){
-return "\e[93m{$we}\e[39m";
+echo "\e[93m{$we}\e[39m";
 }
 elseif(in_array($term, range(180, 198))){
-return "\e[94m{$we}\e[39m";
+echo "\e[94m{$we}\e[39m";
 }
 elseif(in_array($term, range(198, 216))){
-return "\e[95m{$we}\e[39m";
+echo "\e[95m{$we}\e[39m";
 }
 elseif(in_array($term, range(216, 255))){
-return "\e[96m{$we}\e[39m";
+echo "\e[96m{$we}\e[39m";
 }
 }
 ?>
