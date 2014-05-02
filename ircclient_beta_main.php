@@ -2,14 +2,14 @@
 include "jokes.php";
 include "translate.php";
 error_reporting(0); //*disable dirty error messages in the chatt
-date_default_timezone_set("Europe/Stockholm"); //*set europe timezone
+date_default_timezone_set("Europe/Istanbul"); //*set europe timezone
 set_time_limit(0);//*ehhh idk y
 $server = "irc.freenode.org"; //* nah the server to connect to
 $channels = array("#goeosbottest","#dchatt","#jailbreakqa","#atxhack"); //* array of channels
 $channel = $channels[0]; //*default channel
-$port = 6667; //* default irc port
+$port = 6697; //* default irc port
 $nick = "Guest_" . rand(1,2000); //*nah the nick
-$connection = fsockopen("$server", $port); //*open a socket
+$connection = fsockopen("ssl://".$server, $port); //*open a socket
 
 fputs ($connection, "USER $nick $nick $nick $nick :$nick\n");//*connect as a user
 fputs ($connection, "NICK dan|el\n"); //*set a nick
@@ -51,6 +51,7 @@ $data = str_replace("\n","",$data);
 		$a5 = explode(':', $a4[0]);
 		$a6 = explode(':', $data);
         $user = $a5[1];
+        $user = colorize($user);
         $inchannel = $a1[2];
 $args = NULL; for ($i = 4; $i < count($a1); $i++) {$args .= $a1[$i] . ' ';}
 	$all = str_replace("\n","",substr($args, 0, -1));
@@ -179,13 +180,21 @@ $action = $conts[1]; //* define $action to the flag (-someting)
 $chan = $conts[2]; //* set $chan to the second argument
 if($action == "j") //* if the action was j
 {
-snd($connection,"JOIN {$chan}\n"); //*join the channel
+snd($connection,"JOIN {$chan}\n");
+$channels[] = $chan; //*join the channel
 echo "Joined {$chan}\n"; //*and output a message to the cli
 }
-elseif($action == "l") //*if it was l
+elseif($action == "p") //*if it was l
 {
-snd($connection,"PART {$chan}\n"); //* leave the channel without reason
-echo "Left {$chan}\n"; //* and log to cli
+$index = array_search($chan,$channels);
+if($index !== FALSE){
+    unset($channels[$index]);
+    snd($connection,"PART {$chan}\n");
+    echo "Left {$chan}\n";
+}
+ else{
+ echo "You're not in that channel.";
+ }
 }
 elseif($action == "s") //*if it was s
 {
@@ -201,6 +210,13 @@ elseif($action == "n") //* if it was n
 snd($connection,"NICK {$chan}\n"); //* change the nick
 echo "Changed nick to {$chan}\n"; //* and log to cli
 }
+elseif($action == "l")
+{
+echo "You're in:\n";
+foreach($channels as $ch){
+echo $ch."\n";
+}
+}
 else //* else
 {
 echo "Usage:\n"; //* output a usage information to the cli
@@ -208,7 +224,7 @@ echo "/cc [n nickname] [s channel] [l channel] [j channel] [c ]\n";
 echo "n changes the nick\n";
 echo "s switches channel\n";
 echo "j joins channel\n";
-echo "l leaves channel\n";
+echo "p leaves channel\n";
 echo "c outputs the current channel\n";
 }
 }
@@ -274,5 +290,49 @@ function joke($jokes)
 {
 $num = rand(0,count($jokes)-1);
 return $jokes[$num];
+}
+function colorize($we){
+$hash = sha1($we);
+$term = hexdec(substr($hash, 0, 2));
+
+if(in_array($term, range(0, 18))){
+echo "\e[31m{$we}\e[39m";
+}
+elseif(in_array($term, range(18, 36))){
+echo "\e[32m{$we}\e[39m";
+}
+elseif(in_array($term, range(36, 54))){
+echo "\e[33m{$we}\e[39m";
+}
+elseif(in_array($term, range(54, 72))){
+echo "\e[34m{$we}\e[39m";
+}
+elseif(in_array($term, range(72, 90))){
+echo "\e[35m{$we}\e[39m";
+}
+elseif(in_array($term, range(90, 108))){
+echo "\e[36m{$we}\e[39m";
+}
+elseif(in_array($term, range(108, 126))){
+echo "\e[37m{$we}\e[39m";
+}
+elseif(in_array($term, range(126, 144))){
+echo "\e[91m{$we}\e[39m";
+}
+elseif(in_array($term, range(144, 162))){
+echo "\e[92m{$we}\e[39m";
+}
+elseif(in_array($term, range(162, 180))){
+echo "\e[93m{$we}\e[39m";
+}
+elseif(in_array($term, range(180, 198))){
+echo "\e[94m{$we}\e[39m";
+}
+elseif(in_array($term, range(198, 216))){
+echo "\e[95m{$we}\e[39m";
+}
+elseif(in_array($term, range(216, 255))){
+echo "\e[96m{$we}\e[39m";
+}
 }
 ?>
