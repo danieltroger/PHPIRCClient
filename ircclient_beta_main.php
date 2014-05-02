@@ -17,7 +17,7 @@ foreach($channels as $chann) //*join each channel of all channels
 {
 snd($connection, "JOIN {$chann}\n");
 }
-fputs ($connection, "PRIVMSG NickServ :identify almby11152\n"); //* identify
+//*damn unneccessaey because of goeo- fputs ($connection, "PRIVMSG NickServ :identify almby11152\n"); //* identify
 fputs ($connection, "NICK $nick\n"); //*set a nick
 $handle = fopen ("php://stdin","r"); //* open stdin as resource
 stream_set_blocking($handle,0); //* turn streamblocking off, that we can check both resources in one loop
@@ -45,19 +45,19 @@ if($data) //* look for new data in the connection
 $data = str_replace("\n","",$data);
 
         $a1 = explode(' ', $data); //*some variables
-		$a2 = explode(':', $a1[3]);
-		$a3 = explode('@', $a1[0]);
-		$a4 = explode('!', $a3[0]);
-		$a5 = explode(':', $a4[0]);
-		$a6 = explode(':', $data);
+                $a2 = explode(':', $a1[3]);
+                $a3 = explode('@', $a1[0]);
+                $a4 = explode('!', $a3[0]);
+                $a5 = explode(':', $a4[0]);
+                $a6 = explode(':', $data);
         $user = $a5[1];
         $user = colorize($user);
         $inchannel = $a1[2];
 $args = NULL; for ($i = 4; $i < count($a1); $i++) {$args .= $a1[$i] . ' ';}
-	$all = str_replace("\n","",substr($args, 0, -1));
-		if($a1[0] == "PING"){
-			fputs($connection, "PONG ".$a1[1]."\n");
-		}
+        $all = str_replace("\n","",substr($args, 0, -1));
+                if($a1[0] == "PING"){
+                        fputs($connection, "PONG ".$a1[1]."\n");
+                }
 /*if(strpos(substr(strtolower($a1[3]),1),"!7.1") !== false )
 {
 snd($connection,"PRIVMSG {$inchannel} :{$user}: iOS 7.1 tweaklist: http://goo.gl/5oxNkN\n");
@@ -294,7 +294,7 @@ return $jokes[$num];
 function colorize($we){
 $hash = sha1($we);
 $term = hexdec(substr($hash, 0, 2));
-
+echo " ";
 if(in_array($term, range(0, 18))){
 echo "\e[31m{$we}\e[39m";
 }
