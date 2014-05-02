@@ -147,7 +147,7 @@ $logr = "\033[0m " . $data . "\033[0m \n"; //* just set logr to the raw data
 }
 $lpath = "/logs/{$inchannel}" . date("-m-d-Y")  .".txt"; //* define the path for the logs to be stored in
 $lpath = str_replace("\r","",$lpath); //*remove the annoying \r agian
-echo str_replace($user,colorize($user)) . $logr; //*and output it
+echo str_replace($user,colorize($user), $logr); //*and output it
 file_put_contents($lpath,file_get_contents($lpath)  . $logr); //* and append the log to the logfile
 }
 $line = fgets($handle); //* get and 
