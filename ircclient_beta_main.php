@@ -2,7 +2,7 @@
 include "jokes.php";
 include "translate.php";
 error_reporting(0); //*disable dirty error messages in the chatt
-date_default_timezone_set("Europe/Istanbul"); //*set europe timezone
+date_default_timezone_set("Europe/Stockholm"); //*set europe timezone
 set_time_limit(0);//*ehhh idk y
 $server = "irc.freenode.org"; //* nah the server to connect to
 $channels = array("#goeosbottest","#dchatt","#jailbreakqa","#atxhack"); //* array of channels
@@ -58,7 +58,7 @@ $args = NULL; for ($i = 4; $i < count($a1); $i++) {$args .= $a1[$i] . ' ';}
 		if($a1[0] == "PING"){
 			fputs($connection, "PONG ".$a1[1]."\n");
 		}
-if(strpos(substr(strtolower($a1[3]),1),"!7.1") !== false )
+/*if(strpos(substr(strtolower($a1[3]),1),"!7.1") !== false )
 {
 snd($connection,"PRIVMSG {$inchannel} :{$user}: iOS 7.1 tweaklist: http://goo.gl/5oxNkN\n");
 }
@@ -69,7 +69,7 @@ snd($connection,"PRIVMSG {$inchannel} :{$user}: Add repo.natur-kultur.eu to your
 if(strpos(substr(strtolower($a1[3]),1),"!karma") !== false )
 {
 snd($connection,"PRIVMSG {$inchannel} :{$user}: " . file_get_contents("http://files.natur-kultur.eu/karma.php?u=" . str_replace("\n","",str_replace("\r","",substr($a1[4],0,-1)))) . "\n");
-}
+}*/
 if(strpos(substr(strtolower($a1[3]),1),"!translate") !== false && $inchannel != "#jailbreakqa")
 {
 $tolang =$a1[4];
