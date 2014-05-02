@@ -294,45 +294,45 @@ return $jokes[$num];
 function colorize($we){
 $hash = sha1($we);
 $term = hexdec(substr($hash, 0, 2));
-echo " ";
+
 if(in_array($term, range(0, 18))){
-echo "\e[31m{$we}\e[39m";
+return "\e[31m{$we}\e[39m";
 }
 elseif(in_array($term, range(18, 36))){
-echo "\e[32m{$we}\e[39m";
+return "\e[32m{$we}\e[39m";
 }
 elseif(in_array($term, range(36, 54))){
-echo "\e[33m{$we}\e[39m";
+return "\e[33m{$we}\e[39m";
 }
 elseif(in_array($term, range(54, 72))){
-echo "\e[34m{$we}\e[39m";
+return "\e[34m{$we}\e[39m";
 }
 elseif(in_array($term, range(72, 90))){
-echo "\e[35m{$we}\e[39m";
+return "\e[35m{$we}\e[39m";
 }
 elseif(in_array($term, range(90, 108))){
-echo "\e[36m{$we}\e[39m";
+return "\e[36m{$we}\e[39m";
 }
 elseif(in_array($term, range(108, 126))){
-echo "\e[37m{$we}\e[39m";
+return "\e[37m{$we}\e[39m";
 }
 elseif(in_array($term, range(126, 144))){
-echo "\e[91m{$we}\e[39m";
+return "\e[91m{$we}\e[39m";
 }
 elseif(in_array($term, range(144, 162))){
-echo "\e[92m{$we}\e[39m";
+return "\e[92m{$we}\e[39m";
 }
 elseif(in_array($term, range(162, 180))){
-echo "\e[93m{$we}\e[39m";
+return "\e[93m{$we}\e[39m";
 }
 elseif(in_array($term, range(180, 198))){
-echo "\e[94m{$we}\e[39m";
+return "\e[94m{$we}\e[39m";
 }
 elseif(in_array($term, range(198, 216))){
-echo "\e[95m{$we}\e[39m";
+return "\e[95m{$we}\e[39m";
 }
 elseif(in_array($term, range(216, 255))){
-echo "\e[96m{$we}\e[39m";
+return "\e[96m{$we}\e[39m";
 }
 }
 ?>
