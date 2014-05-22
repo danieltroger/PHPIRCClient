@@ -1,6 +1,6 @@
 <?php
 $jokes = array("I just downloaded the animated weather lockscreen for my iphone 4 and I get this geeky looking white boy on my lockscreen that says hello pirate how do I get rid of it!!!!!",
-I just did this red haired geek is still there!!!",
+"I just did this red haired geek is still there!!!",
 "I accidentally upgraded to 7.1. Really mad. Any help?",
 "Now I have iOS 7.1 can I downgrade to 7.0.4 with the use of my SHSH blobs of iOS 6.1.2? Why?",
 "I use are only used for legitimate medical bigboos piracy",
