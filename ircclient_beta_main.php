@@ -5,20 +5,20 @@ error_reporting(0); //*disable dirty error messages in the chatt
 date_default_timezone_set("Europe/Stockholm"); //*set europe timezone
 set_time_limit(0);//*ehhh idk y
 $server = "irc.freenode.org"; //* nah the server to connect to
-$channels = array("#goeosbottest","#dchatt","#jailbreakqa","#atxhack"); //* array of channels
+$channels = array("#goeosbottest","#dchatt","#jailbreakqa","#atxhack","#sn0wbreak","#wenetapls","#sn0wbreak-dev"); //* array of channels
 $channel = $channels[0]; //*default channel
 $port = 6697; //* default irc port
-$nick = "Guest_" . rand(1,2000); //*nah the nick
+$nick = "dan|el"; //*nah the nick
 $connection = fsockopen("ssl://".$server, $port); //*open a socket
 
 fputs ($connection, "USER $nick $nick $nick $nick :$nick\n");//*connect as a user
-fputs ($connection, "NICK dan|el\n"); //*set a nick
+fputs ($connection, "NICK {$nick}\n"); //*set a nick
 foreach($channels as $chann) //*join each channel of all channels
 {
 snd($connection, "JOIN {$chann}\n");
 }
 //*damn unneccessaey because of goeo- fputs ($connection, "PRIVMSG NickServ :identify almby11152\n"); //* identify
-fputs ($connection, "NICK $nick\n"); //*set a nick
+//fputs ($connection, "NICK $nick\n"); //*set a nick
 $handle = fopen ("php://stdin","r"); //* open stdin as resource
 stream_set_blocking($handle,0); //* turn streamblocking off, that we can check both resources in one loop
 stream_set_blocking($connection,0); //*for both resources
@@ -296,43 +296,43 @@ $hash = sha1($we);
 $term = hexdec(substr($hash, 0, 2));
 echo " ";
 if(in_array($term, range(0, 18))){
-echo "\e[31m{$we}\e[39m";
+echo "\033[31m{$we}\033[0m";
 }
 elseif(in_array($term, range(18, 36))){
-echo "\e[32m{$we}\e[39m";
+echo "\033[32m{$we}\033[0m";
 }
 elseif(in_array($term, range(36, 54))){
-echo "\e[33m{$we}\e[39m";
+echo "\033[33m{$we}\033[0m";
 }
 elseif(in_array($term, range(54, 72))){
-echo "\e[34m{$we}\e[39m";
+echo "\033[34m{$we}\033[0m";
 }
 elseif(in_array($term, range(72, 90))){
-echo "\e[35m{$we}\e[39m";
+echo "\033[35m{$we}\033[0m";
 }
 elseif(in_array($term, range(90, 108))){
-echo "\e[36m{$we}\e[39m";
+echo "\033[36m{$we}\033[0m";
 }
 elseif(in_array($term, range(108, 126))){
-echo "\e[37m{$we}\e[39m";
+echo "\033[37m{$we}\033[0m";
 }
 elseif(in_array($term, range(126, 144))){
-echo "\e[91m{$we}\e[39m";
+echo "\033[91m{$we}\033[0m";
 }
 elseif(in_array($term, range(144, 162))){
-echo "\e[92m{$we}\e[39m";
+echo "\033[92m{$we}\033[0m";
 }
 elseif(in_array($term, range(162, 180))){
-echo "\e[93m{$we}\e[39m";
+echo "\033[93m{$we}\033[0m";
 }
 elseif(in_array($term, range(180, 198))){
-echo "\e[94m{$we}\e[39m";
+echo "\033[94m{$we}\033[0m";
 }
 elseif(in_array($term, range(198, 216))){
-echo "\e[95m{$we}\e[39m";
+echo "\033[95m{$we}\033[0m";
 }
 elseif(in_array($term, range(216, 255))){
-echo "\e[96m{$we}\e[39m";
+echo "\033[96m{$we}\033[0m";
 }
 }
 ?>
