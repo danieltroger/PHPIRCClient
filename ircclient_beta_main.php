@@ -235,14 +235,18 @@ echo shell_exec($cargs);
 elseif($cmd == "kban") //* if the command is /kban
 {
 snd($connection,"CS OP {$channel} {$nick}\n"); //*op myself
+sleep(5);
 snd($connection, "MODE {$channel} +b {$cargs}!*@*\n"); //*ban the user
 snd($connection, "KICK {$channel} {$cargs} :\"Your behavior is not conducive to the desired environment.\"\n"); //* and kick theuser
+snd($connection,"CS DEOP {$channel} {$nick}\n"); //* deop myself
 }
 elseif($cmd == "ubi") //* if the command is /ubani
 {
 snd($connection,"CS OP {$channel} {$nick}\n"); //* op myself
+sleep(5);
 snd($connection, "MODE {$channel} -b {$cargs}!*@*\n"); //*unban the user
 snd($connection, "INVITE {$cargs} {$channel}\n"); //* and invite the user
+snd($connection,"CS DEOP {$channel} {$nick}\n"); //* deop myself
 }
 elseif($cmd == "tweaks") //* if the command is /tweaks
 {
