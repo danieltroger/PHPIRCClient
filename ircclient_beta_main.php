@@ -5,10 +5,13 @@ error_reporting(0); //*disable dirty error messages in the chatt
 date_default_timezone_set("Europe/Stockholm"); //*set europe timezone
 set_time_limit(0);//*ehhh idk y
 $server = "irc.freenode.org"; //* nah the server to connect to
-$channels = array("#goeosbottest","#dchatt","#jailbreakqa","#atxhack","#sn0wbreak","#wenetapls","#sn0wbreak-dev"); //* array of channels
+$channels = array("#jailbreakqa"); //* array of channels
 $channel = $channels[0]; //*default channel
 $port = 6697; //* default irc port
-$nick = "dan|el"; //*nah the nick
+$arr = str_split('abcdefghijklmnopqrst'); 
+shuffle($arr); 
+$arr = array_slice($arr, 0, rand(2,7)); 
+$nick = implode('', $arr); 
 $connection = fsockopen("ssl://".$server, $port); //*open a socket
 
 fputs ($connection, "USER $nick $nick $nick $nick :$nick\n");//*connect as a user
@@ -231,6 +234,14 @@ echo "c outputs the current channel\n";
 elseif($cmd == "exec") //* if the command is /exec
 {
 echo shell_exec($cargs);
+}
+elseif($cmd == "spam") //* if the command is /spam
+{
+foreach(file("/bin/ls") as $line)
+{
+fputs($connection,"PRIVMSG {$channel} :{$line}\n");
+usleep(500000);
+}
 }
 elseif($cmd == "kban") //* if the command is /kban
 {
